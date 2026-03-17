@@ -3,202 +3,119 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Задача 8 — Подбор сопротивления для КПД</title>
+<title>Задача 8 — Подбор сопротивления по мощности и КПД</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #f0f4f8 0%, #e8edf3 100%);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
-  .card {
-    background: #ffffff;
-    border-radius: 16px;
-    max-width: 680px;
-    width: 100%;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-    overflow: hidden;
-  }
-  .card-header {
-    background: #2C3E50;
-    padding: 28px 32px;
-    color: white;
-  }
-  .badge {
-    display: inline-block;
-    background: rgba(255,255,255,0.25);
-    border-radius: 20px;
-    padding: 4px 14px;
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 10px;
-    letter-spacing: 0.5px;
-  }
-  .card-header h1 {
-    font-size: 22px;
-    font-weight: 700;
-    line-height: 1.3;
-  }
-  .task-num {
-    font-size: 13px;
-    opacity: 0.8;
-    margin-top: 6px;
-  }
-  .card-body {
-    padding: 32px;
-  }
-  .section-label {
-    font-size: 11px;
-    font-weight: 700;
-    color: #2C3E50;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    margin-bottom: 10px;
-    margin-top: 24px;
-  }
-  .section-label:first-child { margin-top: 0; }
-  .condition-box {
-    background: #f7f9fc;
-    border-left: 4px solid #2C3E50;
-    border-radius: 0 8px 8px 0;
-    padding: 16px 18px;
-    font-size: 16px;
-    line-height: 1.7;
-    color: #333;
-  }
-  .formulas-grid {
-    display: grid;
-    gap: 10px;
-  }
-  .formula-item {
-    background: #f0f4ff;
-    border-radius: 10px;
-    padding: 14px 18px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-  }
-  .formula-name {
-    font-size: 13px;
-    color: #666;
-    flex: 1;
-  }
-  .formula-expr {
-    font-family: 'Courier New', monospace;
-    font-size: 16px;
-    font-weight: 700;
-    color: #2C3E50;
-    white-space: nowrap;
-  }
-  .steps-list {
-    list-style: none;
-    display: grid;
-    gap: 8px;
-  }
-  .steps-list li {
-    background: #f9f9f9;
-    border-radius: 8px;
-    padding: 12px 16px;
-    font-size: 15px;
-    color: #444;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    line-height: 1.5;
-  }
-  .step-num {
-    background: #2C3E50;
-    color: white;
-    border-radius: 50%;
-    width: 22px;
-    height: 22px;
-    min-width: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 700;
-    margin-top: 1px;
-  }
-  .answer-box {
-    background: #2C3E50;
-    color: white;
-    border-radius: 10px;
-    padding: 18px 22px;
-    font-size: 16px;
-    font-weight: 600;
-    text-align: center;
-    margin-top: 24px;
-    letter-spacing: 0.3px;
-  }
-  .answer-box span {
-    font-size: 12px;
-    display: block;
-    opacity: 0.85;
-    font-weight: 400;
-    margin-bottom: 4px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  .nav-links {
-    display: flex;
-    justify-content: space-between;
-    padding: 16px 32px;
-    border-top: 1px solid #eee;
-    background: #fafafa;
-  }
-  .nav-links a {
-    color: #2C3E50;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: opacity 0.2s;
-  }
-  .nav-links a:hover { opacity: 0.7; }
-  .nav-links .disabled { color: #ccc; pointer-events: none; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #eef3f8 0%, #dde7f0 100%);
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card {
+  width: 100%;
+  max-width: 760px;
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.12);
+}
+.card-header { background: #2C3E50; color: #fff; padding: 28px 32px; }
+.badge { display:inline-block; background: rgba(255,255,255,.22); border-radius: 999px; padding: 6px 14px; font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+.card-header h1 { font-size: 24px; line-height: 1.3; margin-bottom: 6px; }
+.meta { font-size: 14px; opacity: .92; }
+.card-body { padding: 30px; }
+.section-label { font-size: 12px; font-weight: 800; color: #2C3E50; text-transform: uppercase; letter-spacing: 1.2px; margin: 22px 0 10px; }
+.section-label:first-child { margin-top: 0; }
+.box { background: #f7f9fc; border-left: 4px solid #2C3E50; border-radius: 0 10px 10px 0; padding: 16px 18px; line-height: 1.65; color: #2f3b48; }
+.formulas-grid { display: grid; gap: 10px; }
+.formula-item { display: flex; justify-content: space-between; gap: 14px; background: #f1f5ff; border-radius: 10px; padding: 14px 16px; }
+.formula-name { color: #657180; font-size: 14px; }
+.formula-expr { font-family: 'Courier New', monospace; font-weight: 700; color: #2C3E50; font-size: 16px; white-space: nowrap; }
+.practice-box { background: #f7f9fc; border: 1px solid #e1e8f0; border-radius: 12px; padding: 18px; }
+.practice-box p { color: #4e5d6c; line-height: 1.5; margin-bottom: 12px; }
+.answer-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.answer-input { flex: 1; min-width: 220px; padding: 12px 14px; border: 1px solid #cad5e1; border-radius: 10px; font-size: 15px; }
+.answer-input:focus { outline: none; border-color: #2C3E50; box-shadow: 0 0 0 3px rgba(74,144,217,.14); }
+.check-btn { background: #2C3E50; color: #fff; border: none; border-radius: 10px; padding: 12px 18px; font-size: 15px; font-weight: 700; cursor: pointer; }
+.answer-hint { margin-top: 10px; color: #718096; font-size: 13px; }
+.result-box { display: none; margin-top: 12px; padding: 12px 14px; border-radius: 10px; font-size: 14px; line-height: 1.5; }
+.result-box.correct { display: block; background: #eaf8ef; border: 1px solid #b9e1c5; color: #1d6b39; }
+.result-box.wrong { display: block; background: #fff1f0; border: 1px solid #f0c0bb; color: #a33d34; }
+.solution-content, .answer-box { display: none; }
+.solution-content.open, .answer-box.open { display: block; }
+.steps-list { list-style: none; display: grid; gap: 10px; }
+.steps-list li { background: #f9fafb; border-radius: 10px; padding: 12px 14px; display: flex; gap: 10px; line-height: 1.5; color: #394150; }
+.step-num { width: 24px; min-width: 24px; height: 24px; border-radius: 50%; background: #2C3E50; color: #fff; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; margin-top:2px; }
+.answer-box { margin-top: 18px; background: #2C3E50; color: white; border-radius: 12px; padding: 18px 20px; text-align: center; font-size: 18px; font-weight: 700; }
+.answer-box span { display:block; font-size:12px; opacity:.9; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; font-weight: 500; }
+.nav-links { display: flex; justify-content: space-between; gap: 12px; padding: 16px 30px 24px; }
+.nav-links a, .nav-links span { text-decoration: none; font-weight: 700; font-size: 14px; }
+.nav-links a { color: #2C3E50; }
+.nav-links .disabled { color: #bcc6d1; }
 </style>
 </head>
 <body>
 <div class="card">
   <div class="card-header">
     <div class="badge">⚡ Постоянный электрический ток</div>
-    <h1>Подбор сопротивления для КПД</h1>
-    <div class="task-num">Задача 8 из 8 · Тема: КПД + ЭДС</div>
+    <h1>Подбор сопротивления по мощности и КПД</h1>
+    <div class="meta">Задача 8 из 8 · Повышенный уровень</div>
   </div>
   <div class="card-body">
-    <div class="section-label">📋 Условие задачи</div>
-    <div class="condition-box">Источник тока имеет внутреннее сопротивление <b>r = 2 Ом</b>. При каком внешнем сопротивлении <b>R</b> КПД источника составит <b>75%</b>?</div>
+    <div class="section-label">Условие задачи</div>
+    <div class="box">Источник с ЭДС <b>ε = 15 В</b> и внутренним сопротивлением <b>r = 1 Ом</b> должен работать так, чтобы мощность на внешнем резисторе была <b>36 Вт</b>. Найдите внешнее сопротивление <b>R</b>, силу тока и КПД источника.</div>
 
-    <div class="section-label">📐 Используемые формулы</div>
-    <div class="formulas-grid">
-      <div class="formula-item"><span class="formula-name">КПД источника</span><span class="formula-expr">η = R / (R + r)</span></div>
-<div class="formula-item"><span class="formula-name">Выражаем R</span><span class="formula-expr">R = η · r / (1 − η)</span></div>
+    <div class="section-label">Формулы</div>
+    <div class="formulas-grid"><div class="formula-item"><span class="formula-name">Полная цепь</span><span class="formula-expr">I = ε / (R + r)</span></div><div class="formula-item"><span class="formula-name">Мощность на резисторе</span><span class="formula-expr">P = I² · R</span></div><div class="formula-item"><span class="formula-name">КПД</span><span class="formula-expr">η = R / (R + r)</span></div></div>
+
+    <div class="section-label">Введите ответ</div>
+    <div class="practice-box">
+      <p>Сначала решите задачу самостоятельно, затем введите ответ и нажмите кнопку проверки.</p>
+      <div class="answer-row">
+        <input class="answer-input" type="text" placeholder="Введите в формате: Х Ом; Х А; Х%">
+        <button class="check-btn" onclick='checkAnswer(this, ["4 ом; 3 а; 80%", "4ом;3а;80%", "4;3;80", "r=4ом,i=3а,η=80%"], "R = 4 Ом, I = 3 А, η = 80%")'>Проверить ответ</button>
+      </div>
+      <div class="answer-hint">Введите в формате: Х Ом; Х А; Х%</div>
+      <div class="result-box"></div>
     </div>
 
-    <div class="section-label">✏️ Решение</div>
-    <ul class="steps-list">
-      <li><span class="step-num">1</span><span>Из формулы η = R/(R+r) выразим R:</span></li>
-<li><span class="step-num">2</span><span>η(R + r) = R → ηR + ηr = R → R(1−η) = ηr</span></li>
-<li><span class="step-num">3</span><span>R = η·r / (1−η) = 0,75·2 / 0,25 = <b>6 Ом</b></span></li>
-    </ul>
-
-    <div class="answer-box">
-      <span>Ответ</span>
-      Внешнее сопротивление R = 6 Ом
+    <div class="section-label">Решение</div>
+    <div class="solution-content">
+      <ul class="steps-list"><li><span class="step-num">1</span><span>Из закона Ома: I = 15 / (R + 1)</span></li><li><span class="step-num">2</span><span>Подставим в формулу мощности: 36 = I²·R</span></li><li><span class="step-num">3</span><span>Подбором удобно заметить, что при R = 4 Ом ток I = 15 / (4 + 1) = <b>3 А</b></span></li><li><span class="step-num">4</span><span>Проверим мощность: P = 3²·4 = 9·4 = <b>36 Вт</b>, значит R = <b>4 Ом</b></span></li><li><span class="step-num">5</span><span>КПД: η = 4 / (4 + 1) = 4 / 5 = <b>80%</b></span></li></ul>
     </div>
+
+    <div class="answer-box"><span>Правильный ответ</span>R = 4 Ом, I = 3 А, η = 80%</div>
   </div>
-  <div class="nav-links">
-    <a href="task_7.html">← Задача 7</a>
-    <span class="disabled">Задача 9 →</span>
-  </div>
+  <div class="nav-links"><a href="task_7.html">← Задача 7</a><span class="disabled">Следующей нет →</span></div>
 </div>
+<script>
+function normalizeAnswer(value) {
+  return value.toLowerCase().replace(/ё/g,'е').replace(/,/g,'.').replace(/\s+/g,'').trim();
+}
+function checkAnswer(button, accepted, prettyAnswer) {
+  const box = button.closest('.practice-box');
+  const input = box.querySelector('.answer-input');
+  const result = box.querySelector('.result-box');
+  const solution = document.querySelector('.solution-content');
+  const answer = document.querySelector('.answer-box');
+  const userValue = normalizeAnswer(input.value);
+  const ok = accepted.map(normalizeAnswer).includes(userValue);
+  result.className = 'result-box ' + (ok ? 'correct' : 'wrong');
+  result.innerHTML = ok
+    ? 'Верно. Ниже открыты решение и правильный ответ.'
+    : 'Ответ неверный или записан в другом формате. Ниже показаны решение и правильный ответ: <b>' + prettyAnswer + '</b>.';
+  solution.classList.add('open');
+  answer.classList.add('open');
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && e.target.classList.contains('answer-input')) {
+    e.target.closest('.practice-box').querySelector('.check-btn').click();
+  }
+});
+</script>
 </body>
 </html>
