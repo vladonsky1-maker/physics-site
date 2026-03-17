@@ -96,6 +96,7 @@ body {
 function normalizeAnswer(value) {
   return value.toLowerCase().replace(/ё/g,'е').replace(/,/g,'.').replace(/\s+/g,'').trim();
 }
+  
 function checkAnswer(button, accepted, prettyAnswer) {
   const box = button.closest('.practice-box');
   const input = box.querySelector('.answer-input');
